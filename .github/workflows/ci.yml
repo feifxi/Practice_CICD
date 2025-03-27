@@ -16,7 +16,7 @@ jobs:
       - name: Set up Docker Compose
         run: |
           docker compose up -d
-          echo "Waiting for containersto initilizes..."
+          echo "Waiting for containers to initilizes..."
           sleep 20
 
       - name: Run test inside web container
