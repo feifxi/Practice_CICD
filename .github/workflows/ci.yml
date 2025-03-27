@@ -1,4 +1,4 @@
-name: CI Test Pipeline
+name: CI with Docker Compose
 
 on:
   push:
@@ -7,14 +7,22 @@ on:
   pull_request:
 
 jobs:
-  build-and-test:
+  docker-ci:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
 
-      - name: Simulate Build
-        run: echo "Building project..."
+      - name: Set up Docker Compose
+        run: |
+          docker compose up -d
+          echo "Waiting for containersto nnitilizes..."
+          sleep 20
 
-      - name: Simulate Test
-        run: echo "Running tests... ✅"
+      - name: Run test inside web container
+        run: docker compose exec -it web curl http://localhost:5000
+
+      - name: Shutdown Docker Compose
+        if: always()
+        run: docker compose down
+
