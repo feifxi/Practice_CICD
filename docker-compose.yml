@@ -1,11 +1,12 @@
 services:
   web:
     image: python:3.9
+    container_name: be_server
     ports:
       - "5000:5000"
     working_dir: /app
     volumes:
-      - ./app:/app  # Mount a local directory for web data
+      - ./be:/app  # Mount a local directory for web data
     command: ["sh", "script.sh"]
     depends_on:
       db:
